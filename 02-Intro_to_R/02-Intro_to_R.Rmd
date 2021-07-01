@@ -91,15 +91,11 @@ You can access these tutorial notes after the session for reference and self-dir
 
 ### Packages
 
-* readr is a package within the tidyverse for importing flat file data, including csv. If you want to import excel files, these can also be read with the tidyverse-adjacent readxl package. The tidyverse also includes the haven package which can read STATA or SPSS files, and httr which can access web based API data. Today we"re just going to look at reading csv files.
+* readr is a package within the tidyverse for importing flat file data, including csv. If you want to import excel files, these can also be read with the tidyverse-adjacent readxl package. The tidyverse also includes the haven package which can read STATA or SPSS files, and httr which can access web based API data. Today we are just going to look at reading csv files.
 
 * readr functions have C++ internals, so tend to import data much faster than base R functions as well as having greater functionality. You should use readr functions rather than the base R read.csv function in almost all cases. Tidyverse versions of functions usually contain an underscore "_" rather than a dot, so the readr version is "read_csv", the base r version is "read.csv"
 
 * read_csv (note the underscore) takes the filename (as string) in the first argument, so you can assign a read in file as follows
-
-```{r createcsv, message=FALSE, warning=FALSE, include=FALSE}
-write_csv(diamonds, "diamonds.csv")
-```
 
 ```{r readr, echo=TRUE, warning=FALSE}
 #load base tidyverse
@@ -308,7 +304,7 @@ starwars %>%
 
 * Grouping a dataframe allows you to perform data operations by specified groups. It is most commonly used with "summarise" to create summary statistics for each group
 
-* summarise uses similar syntax to mutate, but will return results grouped by the variables in group_by. Summarise() or summarize() will do the same thing. As the tidyverse was created by New Zealander Hadley Wickham, British English spellings work.
+* Summarise uses similar syntax to mutate, but will return results grouped by the variables in group_by. Summarise() or summarize() will do the same thing. As the tidyverse was created by New Zealander Hadley Wickham, British English spellings work.
 
 * To see this in action, we"ll calculate the mean, maximum and minimum BMI values for each species
 
@@ -353,10 +349,10 @@ write_csv(summary_df, "summary_df.csv")
 
 So hopefully you can now
 
-1 Describe why RStudio projects are useful, 
-2 Understand how to read in a csv file
-3 Describe and use 6 dplyr verbs for dataframe manipulation
-4 Save manipulated dataframes back to disk
+1. Describe why RStudio projects are useful
+2. Understand how to read in a csv file
+3. Describe and use 6 dplyr verbs for dataframe manipulation
+4. Save manipulated dataframes back to disk  
 
 The content of future sessions will be the subject of a democratic-ish vote in the python club teams channel.
 
