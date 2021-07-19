@@ -403,7 +403,7 @@ quiz(question("Question 1: In R, what symbol is used to assign things to objects
          answer("/="),
          answer("!=", correct = TRUE),
          answer("=/"),
-         answer("=="),
+         answer("=!"),
          random_answer_order = TRUE,
          allow_retry = TRUE)
 )
@@ -480,7 +480,7 @@ ggplot(data = diamonds, mapping = aes(x = cut, y = price)) +
 
 ```{r error, exercise = TRUE, eval = FALSE}
 
-geom(data = diamonds, mapping = aes(x = carat, y = price) + 
+ggplot(data = diamonds, mapping = aes(x = carat, y = price) + 
        geom_point()
 
 ```
