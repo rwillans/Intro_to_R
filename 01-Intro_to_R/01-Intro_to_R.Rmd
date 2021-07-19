@@ -13,7 +13,7 @@ editor_options:
 ```{r setup, include=FALSE}
 library(learnr)
 library(png)
-library(reticulate)
+library(tidyverse)
 knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
 
 ```
@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
 
 Attendees should be able to:
 
-1.  Use basic R operator syntax
+1.  Use basic R operator syntax and access R packages
 2.  Understand the layout of the RStudio integrated development
     environment (IDE)
 3.  Make simple data visualisations with ggplot2
@@ -38,7 +38,7 @@ Attendees should be able to:
     importantly **practising writing code**.
 -   I will point to further resources as we go. Many of these are very good resources indeed. You can teach yourself R **for free** using online resources only. I encourage you to look at these 
     resources where you want more detail on a particular area.
--   I"ll assume no familiarity with R, but will try to take
+-   I will assume no familiarity with R, but will try to take
     into account people"s background and interests. If you"re starting
     from scratch sessions should not overwhelm you.
 -   Each session should allow attendees to come away having learnt how
@@ -58,18 +58,18 @@ Sessions will (very) roughly follow the NHS-R network"s introduction to
 R course, and the R for Data Science book by Wickham and Grolemond
 (<https://r4ds.had.co.nz/>).
 
-## Very Basic R
+## Basic R
 
 ### Basic Operators
 
--   R has the standard mathematical operators, just like python:
+-   R has the standard *mathematical operators*, just like python:
 
     -   "+" is addition
     -   "-" is subtraction
     -   "/" is division
     -   "\*" is multiplication
 
--   Comparison operators are also similar:
+-   *Comparison operators* are also similar:
 
     -   "==" is equal to
     -   "!=" is not equal to
@@ -78,7 +78,7 @@ R course, and the R for Data Science book by Wickham and Grolemond
     -   "\>=" is greater than or equal to
     -   "\<=" is less than or equal to
 
--   The basic logical operators differ as they are symbols not words:
+-   As are *Logical operators*:
 
     -   "\|" (next to the z key) is the symbol for OR
     -   "&" is the symbol for AND
@@ -87,15 +87,15 @@ R course, and the R for Data Science book by Wickham and Grolemond
 
 -   Like python, R comments can be added to lines with "\#"
 
--   Printing objects can just be done by calling the object, it doesn"t
-    need wrapping in print()
-
 -   R has an idiosyncratic assignment operator "\<-" rather than "=".
     The operator "=" will work, but is not generally used and has some
     issues problems that mean "\<-" is generally preferred.
 
--   R is quote agnostic, so single quotes "" work as well as double
-    quotes "" and the difference is mostly stylistic
+-   Printing objects can just be done by calling the object, it does not
+    need wrapping in print()
+
+-   R is quote agnostic, so single quotes work as well as double
+    quotes and the difference is mostly stylistic
 
 -   R is case-sensitive, so "An_Object" is not the same as "an_object"
     when writing code
@@ -122,40 +122,36 @@ TRUE & FALSE
 
 ```
 
-### Basic Indexing
+<!-- ### Basic Indexing -->
 
-Elements of R objects can be accessed via square brackets. R indexes
-from 1, not 0 as in python, so the first element of a vector is
-vector[1]. You can lists pass of indices within the square brackets to
-return selected elements, or sequences via the ":" operator. Boolean
-logic can be used to generate indices as required.
+<!-- Elements of R objects can be accessed via square brackets. R indexes -->
+<!-- from 1, not 0 as in python, so the first element of a vector is -->
+<!-- vector[1]. You can lists pass of indices within the square brackets to -->
+<!-- return selected elements, or sequences via the ":" operator. Boolean -->
+<!-- logic can be used to generate indices as required. -->
 
-To generate a vector or list, wrap the contents in a "c()" function, as
-below. You can think of "c()" as short for "concatenate". Try
-experimenting with returning certain elements of the vector in the cell
-below:
+<!-- To generate a vector or list, wrap the contents in a "c()" function, as -->
+<!-- below. You can think of "c()" as short for "concatenate". Try -->
+<!-- experimenting with returning certain elements of the vector in the cell -->
+<!-- below: -->
 
-```{r vector, exercise = TRUE}
+<!-- ```{r vector, exercise = TRUE} -->
 
-#Setup vector with "c" function
-a_vector <- c("this", "is", "a", "vector")
+<!-- #Setup vector with "c" function -->
+<!-- a_vector <- c("this", "is", "a", "vector") -->
 
-#print vector
-a_vector
+<!-- #print vector -->
+<!-- a_vector -->
 
-#Return the first element
-a_vector[1]
+<!-- #Return the first element -->
+<!-- a_vector[1] -->
 
-#Return the second and fourth elements
-a_vector[c(2,4)]
+<!-- #Return the second and fourth elements -->
+<!-- a_vector[c(2,4)] -->
 
-#Return the first 3 elements
-a_vector[1:3]
-
-#Return elements that are "list")
-a_vector[a_vector == "list"]
-
-```
+<!-- #Return the first 3 elements -->
+<!-- a_vector[1:3] -->
+<!-- ``` -->
 
 ### Packages
 
@@ -163,58 +159,42 @@ R packages are the equivalent of Python libraries, allowing you to use
 code written by someone else rather than re-invent the wheel.
 Confusingly, a "library" in R is a collection of packages, so you have
 your own library comprising the packages you have downloaded. R packages
-in general use are stored (like base R itself) in the Comprehensive R
-Archive Network ("CRAN") and associated mirror sites. Packages on CRAN
+in general use are stored (like base R itself) in the [Comprehensive R
+Archive Network ("CRAN")](https://cran.r-project.org) and associated mirror sites. Packages on CRAN
 have some peer-review and quality checks to ensure they are good
 quality.
 
-To install a package:
+To use a package:
 
-1.  use the "install.packages" function, passing the package name as a
-    string (in quotes). Once installed, it will be available and will
-    not need to be installed again unless updated.
-2.  To then access the functions or data in the package, load it by
-    using the library() function, passing the package name (no quotes).
+1.  Use the "install.packages()" function, passing the package name in quotes between the brackets. You only have to do this once. Once installed, it will be available and will not need to be installed again unless you want to update it to a new version.
+2.  To access the functions and any data in the package, load it by
+    using the library() function, passing the package name.
     "library" needs to be called for each R session
-
-```{r packages, exercise = TRUE, warning= FALSE}
-
-#install the package "fortunes"
-install.packages("fortunes", repos = "https://cran.ma.imperial.ac.uk/")
-
-#load the package "fortunes"
-library(fortunes)
-
-#run the fortune function for a fortune cookie message relating to packages
-fortune(361)
-
-```
 
 ## R and RStudio
 
 ### What is RStudio
 
--   It"s strongly recommended to work through R exercises using the
+-   It is strongly recommended to work through R exercises using the
     integrated development environment (IDE) RStudio.
 -   If you are unfamiliar with IDEs, you can think of R as the "car
     engine" and RStudio as the "dashboard". The IDE makes using the
-    language easier and displays information about what"s happening.
+    language easier and displays information about what is happening.
 
 ![R makes it go, RStudio makes it easier to drive / code . Image and
 analogy from <https://moderndive.com>](images/r_vs_rstudio_1.jpg){width="100%"}
 
 -   Whilst a handful of other R IDEs exist, none really comes close to
-    RStudio, so it"s worthwhile familiarising yourself with it. It"s not
+    RStudio, so it is worthwhile familiarising yourself with it. It"s not
     like Python where different users may prefer differing IDEs for
     certain purposes.
--   RStudio now offers reasonable Python integration via the reticulate
-    package
+-   You can write Python in RStudio too, using the 'reticulate' package
 
 ### Getting started with RStudio
 
 R and RStudio have now been installed on the Python Club server. To
-access the NICE RStudio Server interface, you"ll need to be setup with a
-username and password via the ops team.
+access the NICE RStudio Server interface, you will need to be set up with a
+username and password via the ops team. Alternatively you can use a free [Rstudio cloud](https://rstudio.cloud/projects) account. The usual caveats apply about not uploading information which should not leave NICE, but these can be used for learning.
 
 Once in, you"ll see the following pane.
 
@@ -302,11 +282,14 @@ added by other packages that extend ggplot2.
 
 To practice with ggplot2, we"ll use the inbuilt dataframe "diamonds"
 which is a dataset of almost 54000 diamond prices (in dollars) and their
-characteristics. After loading the tidyverse package suite, we can view
+characteristics. After loading the ggplot2, we can view
 the first few lines of the dataset to see which variables we have
 
 ```{r ggplotstructure, echo=TRUE, message=FALSE, warning=FALSE}
-library(tidyverse)
+
+#if you don't have ggplot2 installed you will have to use install.packages("ggplot2")
+
+library(ggplot2)
 
 head(diamonds)
 
@@ -349,12 +332,12 @@ on the x and y axes to show relative changes.
 
 Scatter plots are useful forms of exploratory data analysis. We can see
 
-1 Not many diamonds end up measured slightly below major increments like
+1. Not many diamonds end up measured slightly below major increments like
 1, 1.5 or 2 carats. Perhaps diamond cutters pick a different cut or cut
-for weight retention to avoid creating a 0.98 carat diamond. 2 The
-overall relationship of price and weight is exponential - the price jump
+for weight retention to avoid creating a 0.98 carat diamond.
+2. The overall relationship of price and weight is exponential - the price jump
 from 1.5 to 2 carats is a lot more than the gap between 0.5 and 1 carat
-3 There is a lot of variation in price even at the same weight point,
+3. There is a lot of variation in price even at the same weight point,
 suggesting that prices are affected by more than just size
 
 So how can we investigate this last point further? We could try to add
@@ -416,11 +399,11 @@ quiz(question("Question 1: In R, what symbol is used to assign things to objects
          answer(" <= ", message = "This is the less than or equal to comparator"),
          random_answer_order = TRUE,
          allow_retry = TRUE),
-     question("Question 2: What index number is the first element in an R list?",
-         answer("0", message = "Sorry this is not like Python or C"),
-         answer("1", correct = TRUE),
-         answer("Trick Question! - you should never reference by position but always by name for more robust code", message = "Lose 10 points for being a smart alec"),
-         answer("42", message = "You must be aRthur Dent"),
+     question("Question 2: Which symbol is the 'not equals to' operator?",
+         answer("/="),
+         answer("!=", correct = TRUE),
+         answer("=/"),
+         answer("=="),
          random_answer_order = TRUE,
          allow_retry = TRUE)
 )
@@ -431,7 +414,7 @@ quiz(question("Question 1: In R, what symbol is used to assign things to objects
 
 ```{r Q3_4, echo=FALSE}
 
-quiz(question("Question 3: What is the console command to install the tidyverse package suite?",
+quiz(question("Question 3: What is the command to install the tidyverse package suite?",
          answer("install.packages(\"tidyverse\")", correct = TRUE),
          answer("install.packages(tidyverse)", message = "Close. You need to enclose the name of the package in quotes"),
          answer("packages.install(tidyverse)"),
@@ -462,7 +445,7 @@ ggplot(data = diamonds, mapping = aes(x = carat, y = price))
 ```
 
 7.  Print the structure of diamonds by running the code below. How many
-    rows and colums does the dataset have? Which columns contain
+    rows and columns does the dataset have? Which columns contain
     continuous variables? Which contain discrete or categorical
     variables?
 
@@ -567,55 +550,54 @@ solve specific queries fairly quickly.
 
 #### General Websites & Mailing lists
 
-Other specific error messages or questions can often be resolved by a
-search on [Google](www.google.co.uk) or [Stack Overflow](https://www.stackoverflow.com). There are also lots of tutorials and short videos on [Youtube](https://www.youtube.com/results?search_query=R+tutorials) if
-you know what you"re searching for. There is also a R specific search
-engine called [R-Seek](https://www.rseek.org) which narrows down results
-to R content only. The [NHS-R community website](https://nhsrcommunity.com) also offers recordings, blogs and
-other R resources. Their slack channel is useful for queries and R
-related news. [R-bloggers](https://r-bloggers.com) also aggregates R
-blogs so can be useful to monitor or search for things of interest. [R weekly](https://rweekly.org) is a mailing list which gives you up to date developments with all things R.
+* Specific error messages or questions can often be resolved by searching [Google](www.google.co.uk) or [Stack Overflow](https://www.stackoverflow.com)\
+* There are lots of [Youtube](https://www.youtube.com/results?search_query=R+tutorials) tutorials if
+you know what you are searching for\
+* There is also a R specific search engine called [R-Seek](https://www.rseek.org) which narrows down results
+to R content only\
+* The [NHS-R community website](https://nhsrcommunity.com) also offers recordings, blogs and other R resources. Their slack channel is useful for queries and R related news\
+* [R-bloggers](https://r-bloggers.com) aggregates R blogs so can be useful to monitor or search for things of interest\
+* [R weekly](https://rweekly.org) is a mailing list which gives you up to date developments with all things R
+
 
 #### Free online resources for learning R
 
 For general learning, many R resources are freely available online, and
 often have the advantage of being continually updated. Useful starting
-points are
+points are:
+
 
 **General R / Introduction**
 
-[Paul lan der Laken"s](https://paulvanderlaken.com/2017/08/10/r-resources-cheatsheets-tutorials-books/)
-continually updated list of R Resources is pretty close to canonical
-[R for Data Science](https://r4ds.had.co.nz/) by Hadley Wickham, original
+* [Paul van der Laken](https://paulvanderlaken.com/2017/08/10/r-resources-cheatsheets-tutorials-books/)
+has a close to canonical list of R Resources\
+* [R for Data Science](https://r4ds.had.co.nz/) by Hadley Wickham, original
 author of the tidyverse suite and chief Data Scientist at RStudio\
-[YaRrr! The Pirate"s Guide to R](https://bookdown.org/ndphillips/YaRrr/)
+* [YaRrr! The Pirates Guide to R](https://bookdown.org/ndphillips/YaRrr/)
 by Nathaniel Phillips, containing a good introduction to R with
-additional buccaneering based humour, if you like that sort of thing.\
-[RStudio"s education pages](https://education.rstudio.com/learn/) have a
-good set of beginner paths and guidance for learning R
-[R Cookbook](http://www.cookbook-r.com/) by Winston Chang. Useful Reference
+additional buccaneering based humour, if you like that sort of thing\
+* [RStudio education pages](https://education.rstudio.com/learn/) have a
+good set of beginner paths and guidance for learning R\
+* [R Cookbook](http://www.cookbook-r.com/) by Winston Chang. Useful Reference
 Guide for R concepts\
-[R Studio Cheat Sheets](https://www.rstudio.com/resources/cheatsheets/).
+* [R Studio Cheat Sheets](https://www.rstudio.com/resources/cheatsheets/).
 Particularly ggplot2 and base r cheat sheets. Also available in Rstudio
 under the help menu/Cheatsheets/Browse Cheatsheets
 
 **Visualisation**
 
-[ggplot2 Elegant Graphics for Data Analysis](https://ggplot2-book.org/)
+* [ggplot2 Elegant Graphics for Data Analysis](https://ggplot2-book.org/)
 by Wickham, Navarro and Pederson. Explains the grammar of graphics and
-how this is implemented in ggplot2
-[R-Charts](https://r-charts.com/) is
-a nice repository of charts to demonstrate the possibilities of using R
-and ggplot2, for inspiration & motivation. 
-The [BBC graphic style rcookbook](https://bbc.github.io/rcookbook/#how_to_create_bbc_style_graphics)
-shows you how the BBC make graphics using R, and how to replicate these
+how this is implemented in ggplot2\
+* [R-Charts](https://r-charts.com/) is a nice repository of charts to demonstrate the possibilities of using R
+and ggplot2, for inspiration & motivation\
+* The [BBC graphic style rcookbook](https://bbc.github.io/rcookbook/#how_to_create_bbc_style_graphics)
+shows you how the BBC make graphics using R, and how to replicate those graphics
 
 **R Programming**
 
-[Hands on Programming with R](https://rstudio-education.github.io/hopr/index.html) by Garrett
-Grolemund. More detail on R programming concepts, notation, practical programming
-[Advanced R](https://adv-r.hadley.nz/) by Hadley Wickham. Useful for
-those with an existing understanding of programming concepts from other
-languages, or advanced R users. **Not** an introductory book.
+* [Hands on Programming with R](https://rstudio-education.github.io/hopr/index.html) by Garrett
+Grolemund. More detail on R programming concepts, notation, practical programming\
+* [Advanced R](https://adv-r.hadley.nz/) by Hadley Wickham. Useful for those with an existing understanding of programming concepts from other languages, or advanced R users. **Not** an introductory book.
 
 ....further resources to be added as we cover more topics
